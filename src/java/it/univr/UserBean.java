@@ -53,9 +53,9 @@ public class UserBean {
 			return "internalError";
 		}
 		if (loggedIn){
-			return "loginSuccess";
+			return "diplomati.jsf";
 		} else {
-			return "loginFailure";
+			return "login.jsf";
 		}
 
 	}
