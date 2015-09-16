@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<head><title>IGNORED</title></head>
+
+<body>
+  <ui:composition>
+  <div class="calendario"> 
+  
+    
+    <!--Div filtri-->
+    <div id="filtroEventi">
+    <ui:insert name="filtroEventi">
+      <h:form>
+
+
+        <table style="width:800px">
+        <tr >
+          <td><h1>Calendario</h1></td>
+        </tr>
+
+        <tr>
+        	<td>
+          <p>Tipo:<h:inputText class="areaStileEVT" value="#{evt.tipo}"/></p>
+          </td>
+          <td>
+          <p>Anno:<h:inputText class="areaStileEVT" value="#{evt.anno}"/></p>
+          </td>
+          <td>
+          <p><h:commandButton value="filtra" action="/Template/calendario.jsf"/></p>
+          </td>
+        </tr>
+        <!--tr>
+          <td style="width:0px">  	
+          <td>Tipo:</td>
+          <td><h:inputText class="areaStile" value="#{evt.tipo}"/></td>
+          </td> 
+          <td>
+          
+          </td> 
+          <td>
+          <td>
+            <p><h:commandButton value="filtra" action="/Template/calendario.jsf"/></p>
+          </td>  
+          </td>
+        </tr-->
+        </table>
+
+
+      </h:form>
+    </ui:insert>
+    </div>
+
+    <!--Stili su h:row(sempre se esiste)-->
+    <!--per righe crea 3 stili(uno x stato), 3 colori diversi, bordi visibili righe su tutti e 3(fini)-->
+
+    <!--Div Elenco(dati calendario)-->
+    <div id="elencoEventi"><!--nello stile usa overflow-y per scroll-->
+    <h:form>
+    <ui:insert name="elencoEventi">
+      <h:dataTable  value="#{evt.getEventi(cs.corso, evt.tipo, evt.anno)}" var="evento" rowClasses="#{evt.colore}">
+        <h:column>
+          <f:facet name="header">Data</f:facet>
+          #{evento.dataS}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Ora</f:facet>
+          #{evento.oraS}
+        </h:column>
+        <h:column>
+          <f:facet name="header">ID Evento</f:facet>
+          #{evento.id}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Erogazione</f:facet>
+          #{evento.codiceErogazione}
+        </h:column>
+        <h:column>
+          <ui:param value="#{evt.recuperaEvento(evento.id)}" name="inutile"/>
+          <f:facet name="header">Docente</f:facet>
+          <h:commandLink
+            value="#{evt.docenteNC(evento.id)}"
+            action="#{er.recuperaDoc( evento.id )}"/> 
+
+<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!DECIDERE COSA FARE COL LINK!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+        </h:column>
+      </h:dataTable>
+    </ui:insert>  
+    </h:form>
+    </div>
+  </div>
+</ui:composition>
+
+</body>
+</html>
