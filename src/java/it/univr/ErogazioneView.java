@@ -9,6 +9,8 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 @ManagedBean(name = "er")
@@ -31,25 +33,29 @@ public class ErogazioneView implements Serializable {
 
     @PostConstruct
     public void initialize() {
-        try {
-            this.ds = new DataSource();
-        } catch (ClassNotFoundException e) {
-            this.ds = null;
-        }
+        this.ds = new DataSource();
     }
 
     public List<Erogazione> getErogazioni(String nome) {
         if (this.ds != null) {
-            listaErogazione = ds.getListaErogazioni(nome);
+            try {
+                listaErogazione = ds.getListaErogazioni(nome);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ErogazioneView.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
         return listaErogazione;
 
     }
 
-    public String recuperaErogazione(String codice) {
+    public String recuperaErogazione(String codice){
         if (this.ds != null) {
-            erogazioneSelezionato = ds.getErogazione(codice);
+            try {
+                erogazioneSelezionato = ds.getErogazione(codice);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ErogazioneView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             if (listaErogazione != null && !listaErogazione.isEmpty()) {
 
@@ -66,7 +72,11 @@ public class ErogazioneView implements Serializable {
     public List<Docente> getDocenti(String codice) {
         List<Docente> listaDoc=null;
         if (this.ds != null) {
-            listaDoc = ds.getListaDocente(codice);
+            try {
+                listaDoc = ds.getListaDocente(codice);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ErogazioneView.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
         return listaDoc;

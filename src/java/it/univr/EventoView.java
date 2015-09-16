@@ -8,6 +8,8 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 @ManagedBean(name = "evt")
@@ -39,11 +41,7 @@ public class EventoView implements Serializable {
 
   @PostConstruct
   public void initialize() {
-    try {
       this.ds = new DataSource();
-    } catch( ClassNotFoundException e ){
-      this.ds = null;
-    }
   }
 
   public List<Evento> getEventi(String corso, String tipo, int anno) {
@@ -51,7 +49,11 @@ public class EventoView implements Serializable {
 
     if( this.ds != null ){
 			
-      listaEventi= ds.getListaEvento(corso, anno, tipo) ;
+        try {
+            listaEventi= ds.getListaEvento(corso, anno, tipo) ;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EventoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     return listaEventi;
   }
@@ -60,7 +62,11 @@ public class EventoView implements Serializable {
     if( this.ds != null ){
 
       
-      eventoSelezionato = ds.getEvento( id );
+        try {
+            eventoSelezionato = ds.getEvento( id );
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EventoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
       
     }
     else{
@@ -100,7 +106,11 @@ public class EventoView implements Serializable {
     this.recuperaEvento(id );
     String doc = "";
 
-    doc = ds.getNeCDoc( eventoSelezionato.getDocente() );
+      try {
+          doc = ds.getNeCDoc( eventoSelezionato.getDocente() );
+      } catch (ClassNotFoundException ex) {
+          Logger.getLogger(EventoView.class.getName()).log(Level.SEVERE, null, ex);
+      }
     return doc;
   }
 

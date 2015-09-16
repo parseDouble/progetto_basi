@@ -8,6 +8,8 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 @ManagedBean(name = "cs")
@@ -45,22 +47,22 @@ public class CorsoStudiView implements Serializable {
 
   @PostConstruct
   public void initialize() {
-    try {
       this.ds = new DataSource();
-    } catch( ClassNotFoundException e ){
-      this.ds = null;
-    }
   }
 
-  public List<CorsoStudi> getCorsi(String categoriacerca, String programmacerca, String sottostringanelnome, int maxStud, int oreLezTot) {
+  public List<CorsoStudi> getCorsi(String categoriacerca, String programmacerca, String sottostringanelnome, int maxStud, int oreLezTot){
     if( this.ds != null ){
 			
-      listaCorsi = ds.getCorsiStudiAttivi(categoriacerca, programmacerca, sottostringanelnome, maxStud, oreLezTot) ;
+        try {
+            listaCorsi = ds.getCorsiStudiAttivi(categoriacerca, programmacerca, sottostringanelnome, maxStud, oreLezTot) ;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CorsoStudiView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     return listaCorsi;
   }
 
-  public String recuperaCorso( String nome){
+  public String recuperaCorso( String nome) throws ClassNotFoundException{
     if( this.ds != null ){
 
       

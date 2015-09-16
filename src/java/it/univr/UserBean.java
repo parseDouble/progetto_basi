@@ -27,11 +27,7 @@ public class UserBean {
 
 	@PostConstruct
  	public void initialize() {
-   		try {
-    		this.ds = new DataSource();
-    	} catch( ClassNotFoundException e ){
-      		this.ds = null;
-    	}
+            this.ds = new DataSource();
   	}
 
 	public void setName(String newValue) { 
