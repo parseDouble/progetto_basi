@@ -46,7 +46,7 @@
 		        <td><h:inputText class="areaStile" value="#{cs.NOreLez}"/></td>
           </tr>
           <tr>
-				    <td><p><h:commandButton value="filtra" action="index"/></p></td>
+              <td><p><h:commandButton value="filtra" action="index"/></p></td>
           </tr>
         </table>
       </h:form>
